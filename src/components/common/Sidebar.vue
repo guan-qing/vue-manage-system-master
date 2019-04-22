@@ -143,14 +143,33 @@
             bus.$on('collapse', msg => {
                 this.collapse = msg;
             });
+            //通过菜单配置显示方式获取不同的菜单数据
+            if (this.$br_config.menuTheme == 0) {
+                //全部显示在左侧菜单栏,一次查询返回全部数据
+            }
+            if (this.$br_config.menuTheme == 1) {
+                //二级菜单显示在左侧菜单栏,将根据父级id查询出对应的数据
+                this.getMenu//一级菜单的数据
+            }
             if (this.getMenu) {
                 console.log(this.getMenu);
             }
         },
+        methods: {
+            getAllMenuData() {
+                this.$br_axios.br_axios_post('', {}).then(data => {
+
+                }).catch(e => {
+                    this.$message.error('获取菜单列表失败!');
+                })
+            }
+        },
         watch: {
             getMenu() {//获取一级菜单的改变,切换对应的二级菜单内容
-                console.log(this.getMenu);
-                this.items = this.items.slice(0, this.getMenu.index * 2);
+                if (this.$br_config.menuTheme === 1) {
+                    console.log(this.getMenu);
+                    this.items = this.items.slice(0, this.getMenu.index * 2);
+                }
             }
         }
     }

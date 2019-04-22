@@ -24,7 +24,7 @@ import br_fun from "./common/publicFun/index.js";
 Vue.prototype.$br_axios = br_axios;//请求
 Vue.prototype.$br_fun = br_fun;//公共方法
 Vue.prototype.$br_config = brConfig;//系统参数
-
+Vue.prototype.$Vue = Vue;//全局vue
 Vue.config.productionTip = false
 Vue.use(ElementUI, {
     size: 'small'

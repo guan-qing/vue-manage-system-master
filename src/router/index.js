@@ -100,6 +100,11 @@ export default new Router({
                     path: '/addBasicData',
                     component: resolve => require(['../components/page/basicData/add.vue'], resolve),
                     meta: {title: '新增数据'}
+                },
+                {
+                    path: '/editBasicData/:id',
+                    component: resolve => require(['../components/page/basicData/edit.vue'], resolve),
+                    meta: {title: '编辑数据'}
                 }
             ]
         },

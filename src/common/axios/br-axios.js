@@ -5,17 +5,27 @@ import {Message} from 'element-ui';
 
 const BASE_URL = configData.baseUrl;
 
+//用来处理请求是不是完整的
+function formUrl(url) {
+    //判断传进来的url是不是完整url
+    if (url.indexOf("http://") == 0 || url.indexOf("https://") == 0) {
+        return url;
+    }
+    //如果不是完整url则拼接上当前服务器地址
+    return `${BASE_URL + url}`
+};
+
 //封装axios的get请求
 export default {
     br_axios_get: (url, params) => {//get请求
-        return $axios.get(`${BASE_URL + url}`, {params: params}).then(data => {
+        return $axios.get(`${formUrl(url)}`, {params: params}).then(data => {
             return Promise.resolve(data);
         }).catch(e => {
             return Promise.reject(e)
         })
     },
     br_axios_post: (url, params) => {//post请求
-        return $axios.post(`${BASE_URL + url}`, qs.stringify(params), {
+        return $axios.post(`${formUrl(url)}`, qs.stringify(params), {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
             }
@@ -34,7 +44,7 @@ export default {
         })
     },
     br_axios_load: (url, params) => {//上传
-        return $axios.post(`${BASE_URL + url}`, params, {
+        return $axios.post(`${formUrl(url)}`, params, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
@@ -45,7 +55,7 @@ export default {
         });
     },
     br_axios_url: (url, params) => {//获取服务器地址
-        return $axios.post(`${BASE_URL + url}`, {params: params}).then(data => {
+        return $axios.post(`${formUrl(url)}`, {params: params}).then(data => {
             return Promise.resolve(data);
         }).catch(e => {
             return Promise.reject(e)

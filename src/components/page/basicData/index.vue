@@ -76,7 +76,7 @@
 
         <!-- 编辑弹出框 -->
         <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
-            <el-form ref="form" :model="form" label-width="50px">
+            <el-form ref="form" :model="form" label-width="0.5rem">
                 <el-form-item label="日期">
                     <el-date-picker type="date" placeholder="选择日期" v-model="form.date" value-format="yyyy-MM-dd"
                                     style="width: 100%;"></el-date-picker>
@@ -96,7 +96,7 @@
         </el-dialog>
 
         <!-- 删除提示框 -->
-        <el-dialog title="提示" :visible.sync="delVisible" width="300px" center>
+        <el-dialog title="提示" :visible.sync="delVisible" width="3rem" center>
             <div class="del-dialog-cnt">删除不可恢复，是否确定删除？</div>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="delVisible = false">取 消</el-button>
@@ -176,15 +176,14 @@
             // 获取 easy-mock 的模拟数据
             getData() {
                 // 开发环境使用 easy-mock 数据，正式环境使用 json 文件
-                if (process.env.NODE_ENV === 'development') {
-                    this.url = '/ms/table/list';
-                }
-                ;
-                this.$axios.post(this.url, {
-                    page: this.cur_page
-                }).then((res) => {
-                    this.tableData = res.data.list;
+                this.$br_axios.br_axios_get("https://easy-mock.com/mock/5c876a08802e0b363b0ae11f/vue-admin/getList", {}).then(data => {
+                    this.tableData = data.data.list;
                 })
+                // this.$axios.post(this.url, {
+                //     page: this.cur_page
+                // }).then((res) => {
+                //     this.tableData = res.data.list;
+                // })
             },
             search() {
                 this.is_search = true;
@@ -196,14 +195,15 @@
                 return row.tag === value;
             },
             handleEdit(index, row) {
-                this.idx = index;
+                /*this.idx = index;
                 const item = this.tableData[index];
                 this.form = {
                     name: item.name,
                     date: item.date,
                     address: item.address
                 }
-                this.editVisible = true;
+                this.editVisible = true;*/
+                this.$router.push({path: `/editBasicData/${row.id}`});
             },
             handleDelete(index, row) {
                 this.idx = index;
@@ -250,6 +250,6 @@
 
 
     .handle-box {
-        margin-bottom: 10px;
+        margin-bottom: 0.1rem;
     }
 </style>
