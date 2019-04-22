@@ -52,7 +52,7 @@
             this.getkey();
         },
         computed: {
-            ...mapGetters(['userInfo'])
+            ...mapGetters(['getUserInfo'])
         },
         methods: {
             submitForm(formName) {

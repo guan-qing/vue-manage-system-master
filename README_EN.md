@@ -105,7 +105,7 @@ A Vue wrapper component for cropperjs. Github: [vue-cropperjs](https://github.co
 
 For example, I don't want to use the Vue-Quill-Editor component, I need to take four steps.
 
-The first step to remove the component of the routing. Enter 'src/router/index.js' and delete the code below.
+The first step to remove the component of the routing. Enter 'src/router/axios-index.js' and delete the code below.
 
 ```JavaScript
 {

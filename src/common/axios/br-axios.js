@@ -1,4 +1,4 @@
-import $axios from './index';
+import $axios from './axios-index';
 import qs from 'qs';//该插件是为了用来格式数据
 import configData from '@/assets/config.json';
 import {Message} from 'element-ui';
@@ -34,11 +34,15 @@ export default {
         })
     },
     br_axios_load: (url, params) => {//上传
-        return $axios.post(`${BASE_URL + url}`, {params: params}).then(data => {
-            return Promise.resolve(data);
-        }).catch(e => {
-            return Promise.reject(e)
-        })
+        return $axios.post(`${BASE_URL + url}`, params, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then((res) => {
+            return Promise.resolve(res.data);
+        }).catch((e) => {
+            return Promise.reject(e);
+        });
     },
     br_axios_url: (url, params) => {//获取服务器地址
         return $axios.post(`${BASE_URL + url}`, {params: params}).then(data => {

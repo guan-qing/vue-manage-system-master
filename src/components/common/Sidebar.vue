@@ -33,6 +33,7 @@
 
 <script>
     import bus from '../common/bus';
+    import {mapGetters} from 'vuex';
 
     export default {
         data() {
@@ -134,13 +135,23 @@
         computed: {
             onRoutes() {
                 return this.$route.path.replace('/', '');
-            }
+            },
+            ...mapGetters(['getMenu'])
         },
         created() {
             // 通过 Event Bus 进行组件间通信，来折叠侧边栏
             bus.$on('collapse', msg => {
                 this.collapse = msg;
-            })
+            });
+            if (this.getMenu) {
+                console.log(this.getMenu);
+            }
+        },
+        watch: {
+            getMenu() {//获取一级菜单的改变,切换对应的二级菜单内容
+                console.log(this.getMenu);
+                this.items = this.items.slice(0, this.getMenu.index * 2);
+            }
         }
     }
 </script>

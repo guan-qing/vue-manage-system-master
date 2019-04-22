@@ -9,15 +9,15 @@
             <div class="handle-box">
                 <el-row :gutter="20">
                     <el-col :span="4">
-                        <el-input prefix-icon="el-icon-search" v-model="basicName"
+                        <el-input prefix-icon="el-icon-search" v-model="basicName" clearable
                                   placeholder="根据基础数据名称搜索..."></el-input>
                     </el-col>
                     <el-col :span="4">
-                        <el-input prefix-icon="el-icon-search" v-model="basicCode"
+                        <el-input prefix-icon="el-icon-search" v-model="basicCode" clearable
                                   placeholder="根据基础数据编码搜索..."></el-input>
                     </el-col>
                     <el-col :span="4">
-                        <el-select v-model="value" placeholder="请选择">
+                        <el-select v-model="value" placeholder="请选择" clearable>
                             <el-option
                                     v-for="item in typeOptions"
                                     :key="item.value"
@@ -27,7 +27,8 @@
                         </el-select>
                     </el-col>
                     <el-col :span="6">
-                        <el-input prefix-icon="el-icon-search" v-model="select_word" placeholder="全局搜索..."></el-input>
+                        <el-input prefix-icon="el-icon-search" v-model="select_word" placeholder="全局搜索..."
+                                  clearable></el-input>
                     </el-col>
                     <el-col :span="2">
                         <el-button type="primary" icon="search" @click="search">搜索</el-button>

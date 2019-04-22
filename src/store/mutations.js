@@ -15,6 +15,9 @@ const matutaions = {
         state.token = token;
         //将token保存到localStorage中
         br_set_data('__token__', token);
+    },
+    [type.SET_MENU](state, menu) {
+        state.menu = menu;
     }
 }
 export default matutaions;

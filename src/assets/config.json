@@ -6,5 +6,6 @@
   "appVersion": "V1.0",
   "app_name": "码上学开发平台",
   "extCode": "0",
-  "capp_id": ""
+  "capp_id": "",
+  "menuTheme": 1
 }

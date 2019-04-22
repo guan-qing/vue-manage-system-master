@@ -8,5 +8,6 @@ const token = br_get_data("__token__", "");
 const state = {
     userInfo: userInfo,//用户信息
     token: token,//token
+    menu: null,//用标记上下菜单的时候一级菜单点击的是那个菜单
 }
 export default state;
