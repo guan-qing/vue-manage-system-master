@@ -6,38 +6,55 @@
             </el-breadcrumb>
         </div>
         <div class="container">
-            <div class="handle-box">
+            <div class="handle-box search-box">
+                <el-form ref="form" :model="searchForm" label-width="0">
+                    <el-row :gutter="20">
+                        <el-col :span="4">
+                            <el-input prefix-icon="el-icon-search" v-model="searchForm.basicName" clearable
+                                      placeholder="根据基础数据名称搜索..."></el-input>
+                        </el-col>
+                        <el-col :span="4">
+                            <el-input prefix-icon="el-icon-search" v-model="searchForm.basicName" clearable
+                                      placeholder="根据基础数据名称搜索..."></el-input>
+                        </el-col>
+                        <el-col :span="4">
+                            <el-input prefix-icon="el-icon-search" v-model="searchForm.basicName" clearable
+                                      placeholder="根据基础数据名称搜索..."></el-input>
+                        </el-col>
+                        <el-col :span="4">
+                            <el-input prefix-icon="el-icon-search" v-model="searchForm.basicCode" clearable
+                                      placeholder="根据基础数据编码搜索..."></el-input>
+                        </el-col>
+                        <el-col :span="4">
+                            <el-select v-model="searchForm.value" placeholder="请选择" clearable>
+                                <el-option
+                                        v-for="item in typeOptions"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </el-col>
+                        <el-col :span="4">
+                            <el-input prefix-icon="el-icon-search" v-model="searchForm.select_word"
+                                      placeholder="全局搜索..."
+                                      clearable></el-input>
+                        </el-col>
+
+                    </el-row>
+                </el-form>
                 <el-row :gutter="20">
-                    <el-col :span="4">
-                        <el-input prefix-icon="el-icon-search" v-model="basicName" clearable
-                                  placeholder="根据基础数据名称搜索..."></el-input>
-                    </el-col>
-                    <el-col :span="4">
-                        <el-input prefix-icon="el-icon-search" v-model="basicCode" clearable
-                                  placeholder="根据基础数据编码搜索..."></el-input>
-                    </el-col>
-                    <el-col :span="4">
-                        <el-select v-model="value" placeholder="请选择" clearable>
-                            <el-option
-                                    v-for="item in typeOptions"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                            </el-option>
-                        </el-select>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-input prefix-icon="el-icon-search" v-model="select_word" placeholder="全局搜索..."
-                                  clearable></el-input>
+                    <el-col :span="2">
+                        <el-button type="primary" icon="search" @click="search">查询</el-button>
                     </el-col>
                     <el-col :span="2">
-                        <el-button type="primary" icon="search" @click="search">搜索</el-button>
+                        <el-button type="primary" icon="search" plain @click="reset">重置</el-button>
                     </el-col>
                     <el-col :span="2">
                         <el-button type="primary" icon="search" @click="addBasicData">新增</el-button>
                     </el-col>
                     <el-col :span="2">
-                        <el-button type="danger" icon="search" @click="search">批量删除</el-button>
+                        <el-button type="danger" icon="search" @click="deleteBatch">批量删除</el-button>
                     </el-col>
                 </el-row>
 
@@ -111,7 +128,8 @@
         name: "index",
         data() {
             return {
-                url: './vuetable.json',
+                searchForm: {},
+                url: '',
                 basicName: '',
                 basicCode: '',
                 value: '',
@@ -185,8 +203,14 @@
                 //     this.tableData = res.data.list;
                 // })
             },
+            //查询
             search() {
                 this.is_search = true;
+                console.log(this.searchForm);
+            },
+            //重置
+            reset() {
+                this.searchForm = {};
             },
             formatter(row, column) {
                 return row.address;
@@ -203,7 +227,8 @@
                     address: item.address
                 }
                 this.editVisible = true;*/
-                this.$router.push({path: `/editBasicData/${row.id}`});
+                //this.$router.push({path: `/editBasicData/${row.id}`});
+                this.$router.push({path: '/editBasicData', query: {id: `${row.id}`}});
             },
             handleDelete(index, row) {
                 this.idx = index;
@@ -234,6 +259,12 @@
                 this.$message.success('删除成功');
                 this.delVisible = false;
             },
+            //批量删除
+            deleteBatch() {
+                if (this.multipleSelection.length === 0) {
+                    this.$message.warning(`请先选择要删除的数据`);
+                }
+            },
             //新增
             addBasicData() {
                 this.$router.push({path: '/addBasicData'})
@@ -243,13 +274,7 @@
 </script>
 
 <style scoped>
-    .handle-box .el-col button,
-    .handle-box .el-col div {
+    .container .handle-box .search-form .el-row .el-col >>> .el-button {
         width: 100%;
-    }
-
-
-    .handle-box {
-        margin-bottom: 0.1rem;
     }
 </style>

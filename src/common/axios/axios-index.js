@@ -1,6 +1,5 @@
 //该js是由用于对axios封装
 import axios from 'axios';
-
 import store from '@/store/index';
 import router from '@/router/index';
 import {Message} from 'element-ui';  //element库的消息提示，可以不用
@@ -60,8 +59,10 @@ axios.interceptors.response.use(
                         showClose: true,
                     });
                     // 清除token
-                    localStorage.removeItem('token');
-                    store.commit('loginSuccess', null);
+                    //localStorage.removeItem('token');
+                    //请空localStorage里的数据
+                    window.localStorage.clear();
+                    //store.commit('loginSuccess', null);
                     // 跳转登录页面，并将要浏览的页面fullPath传过去，登录成功后跳转需要访问的页面
                     setTimeout(() => {
                         router.replace({
@@ -92,6 +93,6 @@ axios.interceptors.response.use(
             }
             return Promise.reject(error.response);
         }
-    })
+    });
 
 export default axios;

@@ -11,20 +11,27 @@
                         <template v-for="subItem in item.subs">
                             <el-submenu v-if="subItem.subs" :index="subItem.index" :key="subItem.index">
                                 <template slot="title">{{ subItem.title }}</template>
+                                <!--<router-link :key="threeItem.index" v-for="(threeItem,i) in subItem.subs"-->
+                                <!--:to="'/'+threeItem.index">-->
                                 <el-menu-item v-for="(threeItem,i) in subItem.subs" :key="i" :index="threeItem.index">
                                     {{ threeItem.title }}
                                 </el-menu-item>
+                                <!--</router-link>-->
                             </el-submenu>
+                            <!--<router-link :key="subItem.index" v-else :to="'/'+subItem.index">-->
                             <el-menu-item v-else :index="subItem.index" :key="subItem.index">
                                 {{ subItem.title }}
                             </el-menu-item>
+                            <!--</router-link>-->
                         </template>
                     </el-submenu>
                 </template>
                 <template v-else>
+                    <!--<router-link :to="'/'+item.index" :key="item.index">-->
                     <el-menu-item :index="item.index" :key="item.index">
                         <i :class="item.icon"></i><span slot="title">{{ item.title }}</span>
                     </el-menu-item>
+                    <!--</router-link>-->
                 </template>
             </template>
         </el-menu>

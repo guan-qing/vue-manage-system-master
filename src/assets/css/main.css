@@ -66,7 +66,7 @@ a {
     margin-bottom: 20px;
 }
 
-.el-button+.el-tooltip {
+.el-button + .el-tooltip {
     margin-left: 10px;
 }
 
@@ -170,4 +170,19 @@ a {
 
 .v-note-wrapper .v-note-panel {
     min-height: 500px;
+}
+
+/*自定义查询页样式*/
+.handle-box {
+    margin-bottom: 20px;
+}
+
+.container .search-box .el-row .el-col button,
+.container .search-box .el-row .el-col div {
+    width: 100%;
+}
+
+
+.handle-box .el-row {
+    margin-bottom: 10px;
 }

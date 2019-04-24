@@ -1,9 +1,14 @@
-import $axios from './axios-index';
 import qs from 'qs';//该插件是为了用来格式数据
-import configData from '@/assets/config.json';
+import $axios from './axios-index';
 import {Message} from 'element-ui';
 
-const BASE_URL = configData.baseUrl;
+var BASE_URL = '';
+//通过发包获取系统配置
+$axios.get('./br_config.json').then(data => {
+    BASE_URL = data.data.baseUrl;
+}).catch(e => {
+    Message.error('获取系统配置失败!');
+});
 
 //用来处理请求是不是完整的
 function formUrl(url) {

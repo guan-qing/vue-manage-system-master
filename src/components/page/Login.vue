@@ -25,7 +25,7 @@
 
 <script>
     import {mapMutations, mapGetters} from 'vuex';
-    import configData from '@/assets/config.json';
+    // import configData from './config.json';
     import jsrsasign from 'jsrsasign';
 
     export default {
@@ -61,13 +61,13 @@
                         //let code = this.enctype(this.keytoken, this.ruleForm.password);
                         //console.log(code);
                         let params = {
-                            deviceType: configData.deviceType,
-                            deviceID: configData.deviceID,
-                            deviceDesc: configData.deviceDesc,
-                            appVersion: configData.appVersion,
-                            app_name: configData.app_name,
-                            extCode: configData.extCode,
-                            capp_id: configData.capp_id, //应用ID  应用二级目录 gx_yunexam
+                            deviceType: this.$br_config.deviceType,
+                            deviceID: this.$br_config.deviceID,
+                            deviceDesc: this.$br_config.deviceDesc,
+                            appVersion: this.$br_config.appVersion,
+                            app_name: this.$br_config.app_name,
+                            extCode: this.$br_config.extCode,
+                            capp_id: this.$br_config.capp_id, //应用ID  应用二级目录 gx_yunexam
                             loginName: this.ruleForm.username,
                             password: this.ruleForm.password,
                         }
@@ -76,11 +76,15 @@
                             // url = data.data;
                         }).catch(e => {
                             this.url = e.data;
-                            debugger
                         })
                         console.log(this.url);
                         localStorage.setItem('ms_username', this.ruleForm.username);
                         this.$router.push('/');
+
+                        this.$notify.success({
+                            title: '提示',
+                            message: '登录成功!',
+                        });
                     } else {
                         console.log('error submit!!');
                         return false;
