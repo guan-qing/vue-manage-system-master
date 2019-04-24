@@ -1,4 +1,4 @@
-import {br_get_data} from '@/common/publicFun/index.js';
+import {br_get_data} from './../common/publicFun/br_function.js';
 
 //从缓存中获取用户信息
 const userInfo = br_get_data("__userInfo__", "");
@@ -9,5 +9,6 @@ const state = {
     userInfo: userInfo,//用户信息
     token: token,//token
     menu: menu,//用标记上下菜单的时候一级菜单点击的是那个菜单
+    allMenu: [],//查询返回的全部菜单
 }
 export default state;

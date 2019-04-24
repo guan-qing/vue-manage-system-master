@@ -11,7 +11,7 @@
                     <!--第一行-->
                     <el-row :gutter="20">
                         <el-col :span="6">
-                            <el-form-item label="活动名称" prop="name">
+                            <el-form-item label="名称" prop="name">
                                 <el-input v-model="form.name" placeholder="文本框" clearable></el-input>
                             </el-form-item>
                         </el-col>
@@ -62,7 +62,8 @@
                     <el-row :gutter="20">
                         <el-col :span="6">
                             <el-form-item label="选择文件">
-                                <br-upload @uploadCallback="uploadCallback"></br-upload>
+                                <br-upload :fileList="fileList" :fileFormat="['xls', 'slsx', 'xlsx']"
+                                           @uploadCallback="uploadCallback" @removeFile="removeFile"/>
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -88,7 +89,7 @@
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="onSubmit('form')">立即创建</el-button>
-                        <el-button>取消</el-button>
+                        <el-button @click="cancel">取消</el-button>
                     </el-form-item>
                 </el-form>
             </div>
@@ -198,7 +199,15 @@
                     desc: [
                         {required: true, message: '请填写活动形式', trigger: 'blur'}
                     ]
-                }
+                },
+                fileList: [{
+                    name: 'food.xls',
+                    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+                }, {
+                    name: 'food2.xls',
+                    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+                }]
+
             }
         },
         created() {
@@ -236,8 +245,31 @@
                 this.$message(`弹出框的内容:${data.name}`);
                 this.visible = false;
             },
-            uploadCallback() {//上传成功的回调
-
+            cancel() {
+                //this.$router.back();
+                this.$router.push({path: '/basicData'})
+            },
+            uploadCallback(param, fileList) {//上传成功的回调
+                console.log(param);
+                console.log(fileList);
+                let formData = new FormData();
+                formData.append('access_token', this.getToken);//随文件上传的其他参数
+                formData.append('save_path', 'tmpfile');
+                formData.append('rename', 'yes');
+                /*formData.append('file', param.file);
+                this.$br_axios.br_axios_load('fserver/upload.do', formData).then(data => {
+                    if (data.success) {
+                        this.$emit('uploadCallback', data);
+                    }
+                }).catch(e => {
+                    this.$emit('uploadCallback', e);
+                    this.$message.error(`上传 ${param.file.name} 失败!`);
+                    return;
+                })*/
+            },
+            removeFile(file, fileList) {
+                console.log(file);
+                console.log(fileList);
             }
         }
     }

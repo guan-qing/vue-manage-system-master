@@ -15,11 +15,13 @@ export default new Router({
             meta: {title: '自述文件'},
             children: [
                 {
+                    name: 'dashboard',
                     path: '/dashboard',
                     component: resolve => require(['../components/page/Dashboard.vue'], resolve),
                     meta: {title: '系统首页'}
                 },
                 {
+                    name: 'icon',
                     path: '/icon',
                     component: resolve => require(['../components/page/Icon.vue'], resolve),
                     meta: {title: '自定义图标'}
@@ -94,17 +96,20 @@ export default new Router({
                 {
                     path: '/basicData',
                     component: resolve => require(['../components/page/basicData/index.vue'], resolve),
-                    meta: {title: '基础数据'}
+                    meta: {title: '基础数据'},
                 },
                 {
                     path: '/addBasicData',
                     component: resolve => require(['../components/page/basicData/add.vue'], resolve),
-                    meta: {title: '新增数据'}
+                    meta: {title: '新增数据'},
+                    hidden: true
                 },
                 {
-                    path: '/editBasicData/:id',
+                    name: 'editBasicData',
+                    path: '/editBasicData',
                     component: resolve => require(['../components/page/basicData/edit.vue'], resolve),
-                    meta: {title: '编辑数据'}
+                    meta: {title: '编辑数据'},
+                    hidden: true
                 }
             ]
         },

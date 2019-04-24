@@ -5,6 +5,7 @@
             <i class="el-icon-menu"></i>
         </div>
         <div class="logo">后台管理系统</div>
+        <bread-crumb v-if="menuTheme==0"/>
         <topMenu v-if="menuTheme==1||menuTheme==2"></topMenu>
         <div class="header-right">
             <div class="header-user-con">
@@ -45,11 +46,13 @@
     </div>
 </template>
 <script>
+    import {mapGetters} from 'vuex';
     import bus from '../common/bus';
     import topMenu from './base/topMenu/topMenu'
+    import breadCrumb from './Breadcrumb';
 
     export default {
-        components: {'topMenu': topMenu},
+        components: {'topMenu': topMenu, breadCrumb},
         data() {
             return {
                 collapse: false,
@@ -67,7 +70,8 @@
                 console.log(this.$br_config.menuTheme)
                 //获取菜单主题是那种,0-左边,1-上左,2-上
                 return this.$br_config.menuTheme
-            }
+            },
+            ...mapGetters(['sidebar'])
         },
         methods: {
             // 用户名下拉菜单选择事件
@@ -108,7 +112,10 @@
                     }
                 }
                 this.fullscreen = !this.fullscreen;
-            }
+            },
+            toggleSideBar() {
+                this.$store.dispatch('ToggleSideBar')
+            },
         },
         mounted() {
             if (document.body.clientWidth < 1500) {

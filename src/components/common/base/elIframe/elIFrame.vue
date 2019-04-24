@@ -27,9 +27,9 @@
         },
         mounted() {
             this.changeIframe();
-            window.onresize = function () {
-                this.changeIframe()
-            }
+            // window.onresize = function () {
+            //     this.changeIframe()
+            // }
         },
         methods: {
             formSrc(src) {

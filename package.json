@@ -13,6 +13,8 @@
     "element-ui": "^2.4.11",
     "jsrsasign": "^8.0.12",
     "mavon-editor": "^2.6.17",
+    "nprogress": "^0.2.0",
+    "path-to-regexp": "^3.0.0",
     "qs": "^6.7.0",
     "vue": "^2.5.21",
     "vue-cropperjs": "^3.0.0",

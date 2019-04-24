@@ -119,7 +119,7 @@ vue.js封装sChart.js的图表组件。访问地址：[vue-schart](https://githu
 
 举个栗子，我不想用 Vue-Quill-Editor 这个组件，那我需要分四步走。
 
-第一步：删除该组件的路由，在目录 src/router/axios-index.js 中，找到引入改组件的路由，删除下面这段代码。
+第一步：删除该组件的路由，在目录 src/router/axios-br_function.js 中，找到引入改组件的路由，删除下面这段代码。
 
 ```JavaScript
 {

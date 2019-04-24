@@ -1,5 +1,5 @@
 import * as type from './mutation-types';
-import {br_set_data} from "@/common/publicFun";
+import {br_set_data} from "./../common/publicFun/br_function";
 
 
 const matutaions = {
@@ -20,6 +20,10 @@ const matutaions = {
         state.menu = menu;
         //将菜单信息保存到localStorage中
         br_set_data('__menu__', JSON.stringify(menu));
+    },
+    //保存所有的菜单
+    [type.SET_ALLMENU](state, allMenu) {
+        state.allMenu = allMenu;
     }
 }
 export default matutaions;
