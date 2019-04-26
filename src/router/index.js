@@ -110,7 +110,8 @@ export default new Router({
                     component: resolve => require(['../components/page/basicData/edit.vue'], resolve),
                     meta: {title: '编辑数据'},
                     hidden: true
-                }
+                },
+
             ]
         },
         {

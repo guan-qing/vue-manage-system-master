@@ -80,9 +80,8 @@
                 </el-row>
 
             </div>
-
-            <el-table :data="tableData" border class="table" ref="multipleTable"
-                      @selection-change="handleSelectionChange">
+            <br-table ref="brTable" :searchParams="searchForm" :selectionArray.sync="multipleSelection"
+                      searchUrl="https://easy-mock.com/mock/5c876a08802e0b363b0ae11f/vue-admin/getList">
                 <el-table-column type="selection" width="55" align="center"></el-table-column>
                 <el-table-column prop="date" label="日期" sortable width="150">
                 </el-table-column>
@@ -99,10 +98,16 @@
                         </el-button>
                     </template>
                 </el-table-column>
-            </el-table>
-            <div class="pagination">
-                <br-pagination :total="tableData.length" @pageChange="pageChange"></br-pagination>
-            </div>
+            </br-table>
+
+            <!--<el-table v-loading="!tableData.length" :data="tableData" border class="table" ref="multipleTable"-->
+            <!--@selection-change="handleSelectionChange">-->
+            <!---->
+            <!--</el-table>-->
+            <!--<div class="pagination">-->
+            <!--&lt;!&ndash;分页组件&ndash;&gt;-->
+            <!--<br-pagination :total="tableData.length" @pageChange="pageChange"></br-pagination>-->
+            <!--</div>-->
         </div>
 
         <!-- 编辑弹出框 -->
@@ -127,13 +132,13 @@
         </el-dialog>
 
         <!-- 删除提示框 -->
-        <el-dialog title="提示" :visible.sync="delVisible" width="3rem" center>
-            <div class="del-dialog-cnt">删除不可恢复，是否确定删除？</div>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="delVisible = false">取 消</el-button>
-                <el-button type="primary" @click="deleteRow">确 定</el-button>
-            </span>
-        </el-dialog>
+        <!--<el-dialog title="提示" :visible.sync="delVisible" width="3rem" center>-->
+        <!--<div class="del-dialog-cnt">删除不可恢复，是否确定删除？</div>-->
+        <!--<span slot="footer" class="dialog-footer">-->
+        <!--<el-button @click="delVisible = false">取 消</el-button>-->
+        <!--<el-button type="primary" @click="deleteRow">确 定</el-button>-->
+        <!--</span>-->
+        <!--</el-dialog>-->
     </div>
 </template>
 
@@ -191,6 +196,7 @@
             },
             // 获取 easy-mock 的模拟数据
             getData() {
+
                 // 开发环境使用 easy-mock 数据，正式环境使用 json 文件
                 this.$br_axios.br_axios_get("https://easy-mock.com/mock/5c876a08802e0b363b0ae11f/vue-admin/getList", {}).then(data => {
                     this.tableData = data.data.list;
@@ -200,10 +206,11 @@
                 // }).then((res) => {
                 //     this.tableData = res.data.list;
                 // })
+
             },
             //查询
             search() {
-                this.getData();
+                this.$refs.brTable.getTableData();
             },
             //重置
             reset() {
@@ -229,7 +236,15 @@
             },
             handleDelete(index, row) {
                 this.idx = index;
-                this.delVisible = true;
+                this.$confirm('是否删除该数据?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.$message.success('删除成功!')
+                }).catch(() => {
+                    this.$message.info('已消取删除!');
+                })
             },
             delAll() {
                 const length = this.multipleSelection.length;
@@ -251,11 +266,11 @@
                 this.$message.success(`修改第 ${this.idx + 1} 行成功`);
             },
             // 确定删除
-            deleteRow() {
-                this.tableData.splice(this.idx, 1);
-                this.$message.success('删除成功');
-                this.delVisible = false;
-            },
+            // deleteRow() {
+            //     this.tableData.splice(this.idx, 1);
+            //     this.$message.success('删除成功');
+            //     this.delVisible = false;
+            // },
             //批量删除
             deleteBatch() {
                 if (this.multipleSelection.length === 0) {
@@ -269,6 +284,11 @@
             //分页(size:每页总数,page:第几页)
             pageChange(size, page) {
                 console.log(`${size}---${page}`);
+            }
+        },
+        watch: {
+            multipleSelection() {
+                console.log(this.multipleSelection);
             }
         }
     }

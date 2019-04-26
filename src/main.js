@@ -19,11 +19,13 @@ import selInput from './components/common/base/selInput/selInput';//弹出查询
 import elIframe from './components/common/base/elIframe/elIFrame';//iframe组件
 import brUpload from './components/common/base/brUpload/brUpload';//上传组件
 import brPagination from './components/common/base/brPagination/brPagination';//分页组件
+import brTable from './components/common/base/brTable/brTable';//表格和分页配套
 
 Vue.component('sel-input', selInput);
 Vue.component('el-iframe', elIframe);
 Vue.component('br-upload', brUpload);
 Vue.component('br-pagination', brPagination);
+Vue.component('br-table', brTable);
 
 import br_axios from "./common/axios/br-axios.js";
 import * as br_fun from "./common/publicFun/br_function.js";

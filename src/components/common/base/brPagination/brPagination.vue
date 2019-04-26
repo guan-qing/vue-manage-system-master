@@ -42,7 +42,8 @@
             handleCurrentChange(val) {
                 //第几页
                 this.$emit("pageChange", this.pageSize, val);
-            }
+            },
+
         }
     }
 </script>
