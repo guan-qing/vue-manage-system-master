@@ -26,6 +26,7 @@ export default {
         return $axios.get(`${formUrl(url)}`, {params: params}).then(data => {
             return Promise.resolve(data);
         }).catch(e => {
+            Message.error('请求数据失败!');
             return Promise.reject(e)
         })
     },
@@ -45,6 +46,7 @@ export default {
             }
             return Promise.resolve(data.data);
         }).catch(e => {
+            Message.error('请求数据失败!');
             return Promise.reject(e)
         })
     },
@@ -56,6 +58,7 @@ export default {
         }).then((res) => {
             return Promise.resolve(res.data);
         }).catch((e) => {
+            Message.error('上传失败!');
             return Promise.reject(e);
         });
     },
@@ -63,6 +66,7 @@ export default {
         return $axios.post(`${formUrl(url)}`, {params: params}).then(data => {
             return Promise.resolve(data);
         }).catch(e => {
+            Message.error('请求数据失败!');
             return Promise.reject(e)
         })
     },

@@ -1,0 +1,90 @@
+@import "./br-main.styl"
+
+br-button() {
+  border-radius 6px
+  font-size 16px
+  font-family "Source Han Sans CN"
+}
+
+/**********************主按钮*******************************/
+.br-main-button
+  mix-width 120px
+  height 40px
+  color #ffffff
+  border none
+  background-color #1a4aa3
+  br-button()
+
+  &:hover
+    background-color #0f3d87
+
+  &:focus
+    background-color #4175c9
+
+/**********************主按钮失效样式*******************************/
+.br-main-button.is-disabled
+  background-color #d1dbed
+
+  &:hover
+    background-color #d1dbed
+
+/**********************次按钮*******************************/
+.br-second-button
+  background-color #ffffff
+  border 1px solid $br-main-color
+  color $br-main-color
+  height 40px
+  br-button()
+
+  &:hover
+  &:active
+  &:focus
+    background #fff
+    border-color #0f3d87
+    color #0f3d87
+
+  &:focus
+    border 1px solid #4175c9
+    color #1a4aa3
+
+/**********************次按钮失效样式*******************************/
+.br-second-button.is-disabled
+  border 1px solid #d1dbed
+  color #d1dbed
+  background #fff
+
+  &:hover
+    color #d1dbed
+    border 1px solid #d1dbed
+    background-color #fff
+
+/**********************小按钮*******************************/
+.br-mix-button
+  background-color #ffffff
+  border 1px solid #c2cad8
+  min-width 90px
+  color #c2cad8
+  height 30px
+  line-height 12px
+  br-button()
+
+  &:hover
+  &:active
+  &:focus
+    background-color #ffffff
+    border 1px solid #1a4aa3
+    color #1a4aa3
+
+  &:focus
+    border 1px solid #4175c9
+
+/**********************小按钮失效样式*******************************/
+.br-mix-button.is-disabled
+  background-color #ffffff
+  border 1px solid #d1dbed
+  color #d1dbed
+
+  &:hover
+    background-color #ffffff
+    border 1px solid #d1dbed
+    color #d1dbed

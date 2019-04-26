@@ -12,14 +12,18 @@ import './components/common/directives';
 import './assets/css/el-icon/el-icon.css';//图标
 import NProgress from 'nprogress';//进度条
 import 'nprogress/nprogress.css';//进度条样式
+//自定义样式
+import './assets/br-css/br-button.styl';
 
 import selInput from './components/common/base/selInput/selInput';//弹出查询组件
 import elIframe from './components/common/base/elIframe/elIFrame';//iframe组件
 import brUpload from './components/common/base/brUpload/brUpload';//上传组件
+import brPagination from './components/common/base/brPagination/brPagination';//分页组件
 
 Vue.component('sel-input', selInput);
 Vue.component('el-iframe', elIframe);
 Vue.component('br-upload', brUpload);
+Vue.component('br-pagination', brPagination);
 
 import br_axios from "./common/axios/br-axios.js";
 import * as br_fun from "./common/publicFun/br_function.js";
