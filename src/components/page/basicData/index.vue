@@ -45,8 +45,29 @@
                 </el-form>
                 <el-row :gutter="20">
                     <el-col :span="2">
-                        <el-button type="primary" icon="search" @click="search">查询</el-button>
+                        <el-button class="br-main-button" type="primary" icon="search" @click="search">查询</el-button>
                     </el-col>
+                    <el-col :span="2">
+                        <el-button disabled class="br-main-button" type="primary" icon="search" @click="search">查询
+                        </el-button>
+                    </el-col>
+
+                    <el-col :span="2">
+                        <el-button class="br-second-button" type="primary" icon="search" @click="search">查询</el-button>
+                    </el-col>
+                    <el-col :span="2">
+                        <el-button disabled class="br-second-button" type="primary" icon="search" @click="search">查询
+                        </el-button>
+                    </el-col>
+
+                    <el-col :span="2">
+                        <el-button class="br-mix-button" type="primary" icon="search" @click="search">查询</el-button>
+                    </el-col>
+                    <el-col :span="2">
+                        <el-button disabled class="br-mix-button" type="primary" icon="search" @click="search">查询
+                        </el-button>
+                    </el-col>
+
                     <el-col :span="2">
                         <el-button type="primary" icon="search" plain @click="reset">重置</el-button>
                     </el-col>
@@ -60,7 +81,8 @@
 
             </div>
 
-            <el-table :data="data" border class="table" ref="multipleTable" @selection-change="handleSelectionChange">
+            <el-table :data="tableData" border class="table" ref="multipleTable"
+                      @selection-change="handleSelectionChange">
                 <el-table-column type="selection" width="55" align="center"></el-table-column>
                 <el-table-column prop="date" label="日期" sortable width="150">
                 </el-table-column>
@@ -79,15 +101,7 @@
                 </el-table-column>
             </el-table>
             <div class="pagination">
-                <el-pagination
-                        @size-change="handleSizeChange"
-                        @current-change="handleCurrentChange"
-                        :current-page="1"
-                        :page-sizes="[100, 200, 300, 400]"
-                        :page-size="100"
-                        layout="total, sizes, prev, pager, next, jumper"
-                        :total="400">
-                </el-pagination>
+                <br-pagination :total="tableData.length" @pageChange="pageChange"></br-pagination>
             </div>
         </div>
 
@@ -129,7 +143,6 @@
         data() {
             return {
                 searchForm: {},
-                url: '',
                 basicName: '',
                 basicCode: '',
                 value: '',
@@ -161,34 +174,19 @@
             this.getData();
         },
         computed: {
-            data() {
-                return this.tableData.filter((d) => {
-                    let is_del = false;
-                    for (let i = 0; i < this.del_list.length; i++) {
-                        if (d.name === this.del_list[i].name) {
-                            is_del = true;
-                            break;
-                        }
-                    }
-                    if (!is_del) {
-                        if (d.address.indexOf(this.select_cate) > -1 &&
-                            (d.name.indexOf(this.select_word) > -1 ||
-                                d.address.indexOf(this.select_word) > -1)
-                        ) {
-                            return d;
-                        }
-                    }
-                })
+            total() {
+                return this.tableData.length;
             }
         },
         methods: {
             // 分页导航
             handleCurrentChange(val) {
-                this.cur_page = val;
-                this.getData();
+                this.tableData.splice(val, 10)
+                console.log('多少条' + val);
             },
             //每页多少条
             handleSizeChange(val) {
+                console.log('每页多少条' + val);
 
             },
             // 获取 easy-mock 的模拟数据
@@ -205,8 +203,7 @@
             },
             //查询
             search() {
-                this.is_search = true;
-                console.log(this.searchForm);
+                this.getData();
             },
             //重置
             reset() {
@@ -268,6 +265,10 @@
             //新增
             addBasicData() {
                 this.$router.push({path: '/addBasicData'})
+            },
+            //分页(size:每页总数,page:第几页)
+            pageChange(size, page) {
+                console.log(`${size}---${page}`);
             }
         }
     }

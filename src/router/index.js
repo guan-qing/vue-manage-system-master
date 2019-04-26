@@ -14,6 +14,7 @@ export default new Router({
             component: resolve => require(['../components/common/Home.vue'], resolve),
             meta: {title: '自述文件'},
             children: [
+
                 {
                     name: 'dashboard',
                     path: '/dashboard',
@@ -105,7 +106,6 @@ export default new Router({
                     hidden: true
                 },
                 {
-                    name: 'editBasicData',
                     path: '/editBasicData',
                     component: resolve => require(['../components/page/basicData/edit.vue'], resolve),
                     meta: {title: '编辑数据'},
