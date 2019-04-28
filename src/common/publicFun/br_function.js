@@ -53,7 +53,7 @@ export function br_set_data(name, value) {
 //根据name从localStorage缓存中取数据
 export function br_get_data(name, value) {
     try {
-        const val = window.localStorage.getItem(name) || "{}";
+        const val = window.localStorage.getItem(name) || value;
         if (isJsonString(val)) {
             return JSON.parse(val) || value;
         } else {
