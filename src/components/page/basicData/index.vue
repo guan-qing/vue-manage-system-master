@@ -45,7 +45,9 @@
                 </el-form>
                 <el-row :gutter="20">
                     <el-col :span="2">
-                        <el-button class="br-main-button" type="primary" icon="search" @click="search">查询</el-button>
+                        <el-button class="br-main-button" type="primary" icon="search" @click="search" v-has="'sear'">
+                            查询
+                        </el-button>
                     </el-col>
                     <el-col :span="2">
                         <el-button disabled class="br-main-button" type="primary" icon="search" @click="search">查询
@@ -86,6 +88,11 @@
                 <el-table-column prop="date" label="日期" sortable width="150">
                 </el-table-column>
                 <el-table-column prop="name" label="姓名" width="120">
+                </el-table-column>
+                <el-table-column prop="state" label="状态" width="120">
+                    <template slot-scope="scope">
+                        <span>{{scope.row.state | formatStata}}</span>
+                    </template>
                 </el-table-column>
                 <el-table-column prop="address" label="地址" :formatter="formatter">
                 </el-table-column>
@@ -236,7 +243,7 @@
             },
             handleDelete(index, row) {
                 this.idx = index;
-                this.$confirm('是否删除该数据?', '提示', {
+                this.$confirm('删除不可恢复，是否确定删除？', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
@@ -284,6 +291,19 @@
             //分页(size:每页总数,page:第几页)
             pageChange(size, page) {
                 console.log(`${size}---${page}`);
+            },
+        },
+        filters: {
+            formatStata(stats) {
+                const statusMap = {
+                    1: '未发布',
+                    2: '待审核',
+                    3: '审核通过',
+                    4: '审核失败',
+                    5: '发布成功',
+                    6: '发布失败'
+                };
+                return statusMap[stats];
             }
         },
         watch: {

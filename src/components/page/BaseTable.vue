@@ -15,7 +15,9 @@
                 <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
                 <el-button type="primary" icon="search" @click="search">搜索</el-button>
             </div>
-            <el-table :data="data" border class="table" ref="multipleTable" @selection-change="handleSelectionChange">
+
+            <br-table ref="brTable" :searchParams="searchForm" :selectionArray.sync="multipleSelection"
+                      searchUrl="https://easy-mock.com/mock/5c876a08802e0b363b0ae11f/vue-admin/getTableData">
                 <el-table-column type="selection" width="55" align="center"></el-table-column>
                 <el-table-column prop="date" label="日期" sortable width="150">
                 </el-table-column>
@@ -25,22 +27,42 @@
                 </el-table-column>
                 <el-table-column label="操作" width="180" align="center">
                     <template slot-scope="scope">
-                        <el-button type="text" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                        <el-button type="text" icon="el-icon-delete" class="red" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                        <el-button type="text" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">编辑
+                        </el-button>
+                        <el-button type="text" icon="el-icon-delete" class="red"
+                                   @click="handleDelete(scope.$index, scope.row)">删除
+                        </el-button>
                     </template>
                 </el-table-column>
-            </el-table>
-            <div class="pagination">
-                <el-pagination background @current-change="handleCurrentChange" layout="prev, pager, next" :total="1000">
-                </el-pagination>
-            </div>
+            </br-table>
+
+            <!--<el-table :data="data" border class="table" ref="multipleTable" @selection-change="handleSelectionChange">-->
+            <!--<el-table-column type="selection" width="55" align="center"></el-table-column>-->
+            <!--<el-table-column prop="date" label="日期" sortable width="150">-->
+            <!--</el-table-column>-->
+            <!--<el-table-column prop="name" label="姓名" width="120">-->
+            <!--</el-table-column>-->
+            <!--<el-table-column prop="address" label="地址" :formatter="formatter">-->
+            <!--</el-table-column>-->
+            <!--<el-table-column label="操作" width="180" align="center">-->
+            <!--<template slot-scope="scope">-->
+            <!--<el-button type="text" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>-->
+            <!--<el-button type="text" icon="el-icon-delete" class="red" @click="handleDelete(scope.$index, scope.row)">删除</el-button>-->
+            <!--</template>-->
+            <!--</el-table-column>-->
+            <!--</el-table>-->
+            <!--<div class="pagination">-->
+            <!--<el-pagination background @current-change="handleCurrentChange" layout="prev, pager, next" :total="1000">-->
+            <!--</el-pagination>-->
+            <!--</div>-->
         </div>
 
         <!-- 编辑弹出框 -->
         <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
             <el-form ref="form" :model="form" label-width="50px">
                 <el-form-item label="日期">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="form.date" value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>
+                    <el-date-picker type="date" placeholder="选择日期" v-model="form.date" value-format="yyyy-MM-dd"
+                                    style="width: 100%;"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="姓名">
                     <el-input v-model="form.name"></el-input>
@@ -73,6 +95,7 @@
         data() {
             return {
                 url: '',
+                searchForm: {},
                 tableData: [],
                 cur_page: 1,
                 multipleSelection: [],
@@ -123,14 +146,15 @@
             // 获取 easy-mock 的模拟数据
             getData() {
                 // 开发环境使用 easy-mock 数据，正式环境使用 json 文件
-                if (process.env.NODE_ENV === 'development') {
-                    this.url = '/ms/table/list';
-                };
-                this.$axios.post(this.url, {
-                    page: this.cur_page
-                }).then((res) => {
-                    this.tableData = res.data.list;
-                })
+                // if (process.env.NODE_ENV === 'development') {
+                //     this.url = '/ms/table/list';
+                // }
+                // ;
+                // this.$axios.post(this.url, {
+                //     page: this.cur_page
+                // }).then((res) => {
+                //     this.tableData = res.data.list;
+                // })
             },
             search() {
                 this.is_search = true;
@@ -143,11 +167,10 @@
             },
             handleEdit(index, row) {
                 this.idx = index;
-                const item = this.tableData[index];
                 this.form = {
-                    name: item.name,
-                    date: item.date,
-                    address: item.address
+                    name: row.name,
+                    date: row.date,
+                    address: row.address
                 }
                 this.editVisible = true;
             },
@@ -172,10 +195,10 @@
             saveEdit() {
                 this.$set(this.tableData, this.idx, this.form);
                 this.editVisible = false;
-                this.$message.success(`修改第 ${this.idx+1} 行成功`);
+                this.$message.success(`修改第 ${this.idx + 1} 行成功`);
             },
             // 确定删除
-            deleteRow(){
+            deleteRow() {
                 this.tableData.splice(this.idx, 1);
                 this.$message.success('删除成功');
                 this.delVisible = false;
@@ -198,18 +221,22 @@
         width: 300px;
         display: inline-block;
     }
-    .del-dialog-cnt{
+
+    .del-dialog-cnt {
         font-size: 16px;
         text-align: center
     }
-    .table{
+
+    .table {
         width: 100%;
         font-size: 14px;
     }
-    .red{
+
+    .red {
         color: #ff0000;
     }
-    .mr10{
+
+    .mr10 {
         margin-right: 10px;
     }
 </style>
