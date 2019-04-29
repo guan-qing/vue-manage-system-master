@@ -39,7 +39,7 @@
 </template>
 
 <script>
-    import bus from '../common/bus';
+    import bus from './bus';
     import {mapGetters} from 'vuex';
 
     export default {

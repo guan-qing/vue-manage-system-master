@@ -3,7 +3,7 @@
     <el-dialog :title="title" :visible="visible" :v-model="vModel" :width="width" :height="height"
                :before-close="closeDialog">
         <el-input prefix-icon="el-icon-search" v-model="vModel.name" placeholder="这是弹出框的输入框...."></el-input>
-        <el-iframe src="http://www.w3school.com.cn/tags/tag_frame.asp" height="500px"></el-iframe>
+        <br-iframe src="http://www.w3school.com.cn/tags/tag_frame.asp" height="500px"></br-iframe>
         <div slot="footer" class="dialog-footer">
             <el-button @click="closeDialog">取 消</el-button>
             <el-button type="primary" @click="confirmDialog">确 定</el-button>
