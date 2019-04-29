@@ -1,24 +1,36 @@
 //该js是由用于对axios封装
 import axios from 'axios';
-import store from '@/store/index';
 import router from '@/router/index';
+import {br_get_data} from "../publicFun/br_function";
 import {Message} from 'element-ui';  //element库的消息提示，可以不用
 
 // 请求拦截器
+
 axios.interceptors.request.use(
     config => {
-        // 每次发送请求之前判断vuex中是否存在token
-        // 如果存在，则统一在http请求的header都加上token，这样后台根据token判断你的登录情况
-        // 即使本地存在token，也有可能token是过期的，所以在响应拦截器中要对返回状态进行判断
-        const token = store.state.token;
-        token && (config.headers.Authorization = token);
-        return config;
+        //从缓存中取出token拼接到参数中
+        const token = br_get_data("__token__", "");
+        //token && (config.headers.Authorization = token);
+        //token && (config.headers.common['token'] = token);
+        if (config.method == 'post') {
+            config.data = {
+                ...config.data,
+                token: token,
+            }
+        } else if (config.method == 'get') {
+            config.params = {
+                token: token,
+                ...config.params
+            }
+        }
+        return config
     },
     error => {
         return Promise.error(error);
     });
 
-// 响应拦截器
+//
+
 axios.interceptors.response.use(
     response => {
         // 如果返回的状态码为200，说明接口请求成功，可以正常拿到数据
@@ -36,10 +48,10 @@ axios.interceptors.response.use(
     error => {
         if (error.response.status) {
             switch (error.response.status) {
-                // 401: 未登录
+                // 900: 未登录
                 // 未登录则跳转登录页面，并携带当前页面的路径
                 // 在登录成功后返回当前页面，这一步需要在登录页操作。
-                case 401:
+                case 900:
                     router.replace({
                         path: '/login',
                         query: {

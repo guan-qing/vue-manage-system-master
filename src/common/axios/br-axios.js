@@ -31,11 +31,8 @@ export default {
         })
     },
     br_axios_post: (url, params) => {//post请求
-        return $axios.post(`${formUrl(url)}`, qs.stringify(params), {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-            }
-        }).then(data => {
+        debugger
+        return $axios.post(`${formUrl(url)}`, params).then(data => {
             if (!data.data.success) {
                 Message({
                     message: data.data.message,

@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import NProgress from "nprogress";
+import {br_get_data} from "../common/publicFun/br_function";
 
 Vue.use(Router);
 
@@ -13,7 +14,7 @@ const router = new Router({
         },
         {
             path: '/',
-            component: resolve => require(['../components/common/Home.vue'], resolve),
+            component: resolve => require(['../components/common/home/Home.vue'], resolve),
             meta: {title: '自述文件'},
             children: [
                 {
@@ -129,13 +130,12 @@ const router = new Router({
 //使用钩子函数对路由进行权限跳转
 router.beforeEach((to, from, next) => {
     NProgress.start()
-    const role = localStorage.getItem('ms_username');
-    const token = localStorage.getItem('__token__');
-    if (!role && to.path !== '/login') {
+    const token = br_get_data('__token__', '');
+    if (!token && to.path !== '/login') {
         //切换到登录页时,要么是过期,要么是退出,清空缓存
         window.localStorage.clear();
         next('/login');
-    } else if (to.meta.permission) {
+     } else if (to.meta.permission) {
         // 如果是管理员权限则可进入，这里只是简单的模拟管理员权限而已
         role === 'admin' ? next() : next('/403');
     } else {

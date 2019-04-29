@@ -9,23 +9,23 @@
             <div class="handle-box search-box">
                 <el-form ref="form" :model="searchForm" label-width="0">
                     <el-row :gutter="20">
-                        <el-col :span="4">
-                            <el-input prefix-icon="el-icon-search" v-model="searchForm.basicName" clearable
-                                      placeholder="根据基础数据名称搜索..."></el-input>
-                        </el-col>
-                        <el-col :span="4">
-                            <el-input prefix-icon="el-icon-search" v-model="searchForm.basicName" clearable
-                                      placeholder="根据基础数据名称搜索..."></el-input>
-                        </el-col>
-                        <el-col :span="4">
-                            <el-input prefix-icon="el-icon-search" v-model="searchForm.basicName" clearable
-                                      placeholder="根据基础数据名称搜索..."></el-input>
-                        </el-col>
-                        <el-col :span="4">
-                            <el-input prefix-icon="el-icon-search" v-model="searchForm.basicCode" clearable
-                                      placeholder="根据基础数据编码搜索..."></el-input>
-                        </el-col>
-                        <el-col :span="4">
+                            <el-col :span="4">
+                                <el-input prefix-icon="el-icon-search" v-model="searchForm.basicName" clearable
+                                          placeholder="根据基础数据名称搜索..."></el-input>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-input prefix-icon="el-icon-search" v-model="searchForm.basicName" clearable
+                                          placeholder="根据基础数据名称搜索..."></el-input>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-input prefix-icon="el-icon-search" v-model="searchForm.basicName" clearable
+                                          placeholder="根据基础数据名称搜索..."></el-input>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-input prefix-icon="el-icon-search" v-model="searchForm.basicCode" clearable
+                                          placeholder="根据基础数据编码搜索..."></el-input>
+                            </el-col>
+                            <el-col :span="4">
                             <el-select v-model="searchForm.value" placeholder="请选择" clearable>
                                 <el-option
                                         v-for="item in typeOptions"
@@ -82,6 +82,7 @@
                 </el-row>
 
             </div>
+
             <br-table ref="brTable" :searchParams="searchForm" :selectionArray.sync="multipleSelection"
                       searchUrl="https://easy-mock.com/mock/5c876a08802e0b363b0ae11f/vue-admin/getList">
                 <el-table-column type="selection" width="55" align="center"></el-table-column>

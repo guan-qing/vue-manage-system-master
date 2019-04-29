@@ -49,7 +49,7 @@
             }
         },
         created() {
-            this.getkey();
+            //this.getkey();
         },
         computed: {
             ...mapGetters(['getUserInfo'])
@@ -58,33 +58,34 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        //let code = this.enctype(this.keytoken, this.ruleForm.password);
-                        //console.log(code);
+                        const {deviceType, deviceID, deviceDesc, appVersion, app_name, extCode, app_id} = this.$br_config;
                         let params = {
-                            deviceType: this.$br_config.deviceType,
-                            deviceID: this.$br_config.deviceID,
-                            deviceDesc: this.$br_config.deviceDesc,
-                            appVersion: this.$br_config.appVersion,
-                            app_name: this.$br_config.app_name,
-                            extCode: this.$br_config.extCode,
-                            capp_id: this.$br_config.capp_id, //应用ID  应用二级目录 gx_yunexam
+                            deviceType,
+                            deviceID,
+                            deviceDesc,
+                            appVersion,
+                            app_name,
+                            extCode,
+                            app_id, //应用ID  应用二级目录 gx_yunexam
                             loginName: this.ruleForm.username,
                             password: this.ruleForm.password,
-                        }
-                        //const url;
-                        this.$br_axios.br_axios_post("token/register.do", params).then(data => {
-                            // url = data.data;
-                        }).catch(e => {
-                            this.url = e.data;
-                        })
-                        console.log(this.url);
-                        localStorage.setItem('ms_username', this.ruleForm.username);
-                        this.$router.push('/');
+                        };
 
-                        this.$notify.success({
-                            title: '提示',
-                            message: '登录成功!',
-                        });
+                        this.$br_axios.br_axios_get("token/login.do", params).then(data => {
+                            if (data.data.success) {
+                                this.$br_fun.br_set_data("__token__", data.data.data.access_token);
+                                this.$notify.success({
+                                    title: '提示',
+                                    message: '登录成功!',
+                                })
+                                this.$router.push('/');
+                            } else {
+                                this.$message.error(data.data.message);
+                            }
+                        }).catch(e => {
+                            this.$message.error(e.message);
+                        })
+
                     } else {
                         console.log('error submit!!');
                         return false;

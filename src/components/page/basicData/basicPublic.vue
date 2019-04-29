@@ -236,6 +236,7 @@
             selEject() {//弹出查询
                 this.visible = true;
                 this.form.name = '弹出框的输入框';
+                this.form.factor = '选择了..';
             },
             delEject() {
                 console.log(this.form.name)
